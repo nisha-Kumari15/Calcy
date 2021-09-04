@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <Title>Calcy</Title>
+        <style>
+            .myCal{
+                margin: auto;
+                width:350px;
+                height:350px;
+                background-color: aquamarine;
+                padding: 5px;
+            }
+
+            .output{
+                line-height: 40px;
+                background-color: aliceblue;
+                color: black;
+                height: 40px;
+                margin-bottom: 10px;
+                font-size: 1.4em;
+                text-align:right;
+                padding-left: 2px;
+                font-family: monospace;
+                padding: 0 8px;
+            }
+
+            .btn{
+                width: 50px;
+                height: 50px;
+                padding: 7px;
+                margin: 3px;
+                background-color: azure;
+                text-align: center;
+                font-size: 1.5em;
+                cursor:pointer;
+                vertical-align: middle;
+                line-height: 50px;
+                display: inline-block;
+            }
+
+            .row{
+                width: 200px;
+                display: inline;
+
+            }
+        </style>
+    </head>
+    <body>
+        <div class="myCal"></div>
+        <script>
+         const myClaculator = document.querySelector(".myCal");
+         const myKeys = [["C","1","2","3"],["4","5","6","7"],["8","9","0","="],
+          ["+","-","*","/"]];
+          const myOper = ["+","-","*","/"];
+          let myOutput;
+          document.addEventListener("DOMContentLoaded",function(){
+              myOutput = document.createElement("div");
+              myOutput.innerHTML = "0";
+              myOutput.classList.add("output");
+              myClaculator.appendChild(myOutput);
+              for(let y=0;y<myKeys.length;y++)
+              {
+                  let key = document.createElement("div");
+                  key.classList.add("row");
+                  for(let x=0; x<myKeys[y].length;x++)
+                  {
+                      let btn = document.createElement("div");
+                      btn.innerHTML = myKeys[y][x];
+                      btn.classList.add("btn");
+                      btn.addEventListener("click",btnHit);
+                      key.appendChild(btn);
+                  }
+                  myClaculator.appendChild(key);
+
+              }
+          })
+
+          function btnHit()
+          {
+              let myValue = this.innerText;
+              let myCal = myOutput.innerText;
+              if(myCal == "0")
+              {
+                  myCal = "";
+              }
+              
+              if(myValue == "=")
+              {
+                  myCal = eval(myCal);
+              }else{
+              let lastChar = myCal.substring(myCal.length-1);
+              
+              if(myOper.includes(myValue))
+              {
+                  if(myOper.includes(lastChar))
+                  {
+                    myCal = myCal.substring(0,myCal.length-1);
+                  }else{
+                    myCal = eval(myCal);
+                  }
+                 
+              }
+              myCal = myCal + myValue;
+             
+            }
+            if(myValue == "C")
+              {
+                  myCal = 0;
+              }
+
+            myOutput.innerText = myCal;
+          }
+            </script>
+    </body>
+</html>
